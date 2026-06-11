@@ -6,8 +6,8 @@ const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   res.send(`
     <h1>Aplicación DevSecOps - CD</h1>
-    <p>Desplegada automáticamente en Render mediante GitHub.</p>
-    <p>Versión 2.0 - Cambio desplegado automáticamente con CD</p>
+    <p>Desplegada automáticamente en Render mediante GitHub Actions.</p>
+    <p>Versión 2.1 - Despliegue automático verificado</p>
   `);
 });
 

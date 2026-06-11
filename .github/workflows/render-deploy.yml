@@ -1,0 +1,33 @@
+name: CD Render Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-security-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test --if-present
+
+      - name: Analisis basico de seguridad
+        run: npm audit --audit-level=critical
+
+      - name: Disparar despliegue en Render
+        run: curl -X POST "$RENDER_DEPLOY_HOOK_URL"
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
